@@ -1,0 +1,11 @@
+.navbar a {
+  text-transform: uppercase;
+}
+
+.menu-button {
+  margin-right: 8px;
+}
+
+.active {
+  background-color: hsl(262deg 42% 53%);
+}
