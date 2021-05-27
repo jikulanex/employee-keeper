@@ -1,0 +1,10 @@
+.home {
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 54px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+}
