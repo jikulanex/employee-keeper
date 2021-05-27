@@ -1,0 +1,23 @@
+<mat-card class="form-container">
+  <h2 class="form-title">Create new skill</h2>
+
+  <form class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Skills</mat-label>
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <!-- <mat-chip [selectable]="true" [removable]="true"> HTML </mat-chip>
+      <mat-chip [selectable]="true" [removable]="true"> CSS </mat-chip>
+      <mat-chip [selectable]="true" [removable]="true"> JS </mat-chip> -->
+        <input
+          placeholder="Input some skills"
+          [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="submit-button">
+      Submit
+    </button>
+  </form>
+</mat-card>
