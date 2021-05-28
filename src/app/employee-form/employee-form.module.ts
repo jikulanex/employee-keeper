@@ -9,8 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+
+// Load the shared module to get access to  the 'Form' component.
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [EmployeeFormHomeComponent],
@@ -22,8 +23,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDatepickerModule,
     MatNativeDateModule,
     MatChipsModule,
-    MatButtonModule,
-    MatCardModule,
+    SharedModule,
   ],
 })
 export class EmployeeFormModule {}

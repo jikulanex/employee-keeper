@@ -1,26 +1,30 @@
-<mat-card class="form-container">
-  <h2 class="form-title">Create new employee</h2>
+<app-form>
+  <header>
+    <h2 class="form-title">Create new employee</h2>
+  </header>
 
-  <form class="form">
-    <mat-form-field appearance="fill">
-      <mat-label>Firstname</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Firstname</mat-label>
+    <input matInput (input)="setFirstname($event)" />
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Lastname</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Lastname</mat-label>
+    <input matInput (input)="setLastname($event)" />
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Birthdate</mat-label>
-      <input matInput [matDatepicker]="newdate" />
-      <mat-datepicker-toggle matSuffix [for]="newdate"></mat-datepicker-toggle>
-      <mat-datepicker #newdate></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Birthdate</mat-label>
+    <input
+      matInput
+      [matDatepicker]="newdate"
+      (dateChange)="setBirthdate($event)"
+    />
 
-    <button mat-raised-button color="primary" class="submit-button">
-      Submit
-    </button>
-  </form>
-</mat-card>
+    <!-- Date picker toggle component -->
+    <mat-datepicker-toggle matSuffix [for]="newdate"></mat-datepicker-toggle>
+
+    <!-- Date picker component -->
+    <mat-datepicker #newdate></mat-datepicker>
+  </mat-form-field>
+</app-form>
