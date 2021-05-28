@@ -1,0 +1,16 @@
+.form-container {
+  width: 400px;
+  margin: 16px auto 0;
+  display: grid;
+  padding: 32px;
+}
+
+.form {
+  display: grid;
+}
+
+.submit-button {
+  text-transform: uppercase;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
