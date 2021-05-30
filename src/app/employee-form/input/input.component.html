@@ -1,0 +1,30 @@
+<!-- First name text field -->
+<label>{{ label }}</label>
+
+<div class="control has-icons-left mb-1">
+  <input
+    class="input"
+    type="text"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    [ngClass]="{
+      'is-danger': displayErrorHelperText(),
+      'is-primary': !displayErrorHelperText()
+    }"
+  />
+
+  <span class="icon is-left">
+    <i class="fas fa-user" aria-hidden="true"></i>
+  </span>
+
+  <ng-container *ngIf="displayErrorHelperText()">
+    <div class="help is-danger" *ngIf="control.errors.required">
+      {{ helperText }}
+    </div>
+
+    <div class="help is-danger" *ngIf="control.errors.maxlength">
+      Must be less than
+      {{ control.errors.maxlength.requiredLength }} characters.
+    </div>
+  </ng-container>
+</div>
