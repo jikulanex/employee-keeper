@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-interface Employee {
-  firstName: string;
-  lastName: string;
-  birthDate: string;
+interface Skill {
+  id: number;
+  name: string;
 }
 
 @Component({
@@ -12,31 +12,30 @@ interface Employee {
   styleUrls: ['./employee-form-home.component.css'],
 })
 export class EmployeeFormHomeComponent implements OnInit {
-  employee: Employee = {
-    firstName: 'Sieg',
-    lastName: 'Balona',
-    birthDate: '1988-07-31',
-  };
-
   constructor() {}
 
   ngOnInit(): void {}
 
-  setFirstname = (event: Event) => {
-    // Enable the commented out code below during debugging.
-    // console.log('Firstname', (event.target as HTMLInputElement).value);
-    this.employee.firstName = (event.target as HTMLInputElement).value;
-  };
+  employeeForm = new FormGroup({
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20),
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20),
+    ]),
+    skills: new FormControl('', [Validators.required]),
+    birthDate: new FormControl('', [Validators.required]),
+  });
 
-  setLastname = (event: Event) => {
-    // Enable the commented out code below during debugging.
-    // console.log('Lastname', (event.target as HTMLInputElement).value);
-    this.employee.lastName = (event.target as HTMLInputElement).value;
-  };
-
-  setBirthdate = (event: any) => {
-    // Enable the commented out code below during debugging.
-    // console.log('Birthdate', (event.target as HTMLInputElement).value);
-    this.employee.birthDate = (event.target as HTMLInputElement).value;
-  };
+  options: Skill[] = [
+    { id: 0, name: 'HTML' },
+    { id: 1, name: 'CSS' },
+    { id: 2, name: 'JavaScript' },
+    { id: 3, name: 'Node.js' },
+    { id: 4, name: 'Angular' },
+    { id: 5, name: 'Vue.js' },
+    { id: 6, name: 'React.js' },
+  ];
 }
