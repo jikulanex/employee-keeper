@@ -1,0 +1,15 @@
+<!-- Birth date text field -->
+<label>{{ label }}</label>
+
+<div class="control has-icons-left mb-1">
+  <input class="input is-primary" type="date" [formControl]="control" />
+  <span class="icon is-left">
+    <i class="fas fa-calendar" aria-hidden="true"></i>
+  </span>
+
+  <ng-container *ngIf="displayErrorHelperText()">
+    <div class="help is-danger" *ngIf="control.errors.required">
+      {{ helperText }}
+    </div>
+  </ng-container>
+</div>
