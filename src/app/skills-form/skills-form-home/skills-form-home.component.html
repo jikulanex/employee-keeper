@@ -1,19 +1,29 @@
-<app-form>
-  <header>
-    <h2 class="form-title">Create new skill</h2>
-  </header>
+<!-- Panel component -->
+<div class="panel mt-5">
+  <!-- Panel title -->
+  <p class="panel-heading is-size-6">Add skill form</p>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Skills</mat-label>
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <!-- <mat-chip [selectable]="true" [removable]="true"> HTML </mat-chip>
-    <mat-chip [selectable]="true" [removable]="true"> CSS </mat-chip>
-    <mat-chip [selectable]="true" [removable]="true"> JS </mat-chip> -->
-      <input
-        placeholder="Input some skills"
-        [matChipInputFor]="chipList"
-        [matChipInputAddOnBlur]="true"
-      />
-    </mat-chip-list>
-  </mat-form-field>
-</app-form>
+  <!-- Form component -->
+  <form>
+    <!-- Input component -->
+    <app-input
+      label="Skill name"
+      [control]="skillsForm.get('name')"
+    ></app-input>
+  </form>
+
+  <!-- Enable only during debugging -->
+  <!-- <div class="panel-block">
+    <div>Form contents {{ skillsForm.value | json }}</div>
+  </div> -->
+
+  <!-- Enable only during debugging -->
+  <!-- <div class="panel-block">
+    <div>Form is valid {{ skillsForm.valid }}</div>
+  </div> -->
+
+  <!-- Enable only during debugging -->
+  <!-- <div class="panel-block">
+    <div>Errors around name {{ skillsForm.controls.name.errors | json }}</div>
+  </div> -->
+</div>
