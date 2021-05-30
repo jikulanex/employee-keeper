@@ -6,9 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./skill-table.component.css'],
 })
 export class SkillTableComponent implements OnInit {
-  employeeData = [{ id: 0, skill: 'JavaScript' }];
+  skillData = [
+    { id: 0, name: 'HTML' },
+    { id: 1, name: 'CSS' },
+    { id: 2, name: 'JavaScript' },
+    { id: 3, name: 'Node.js' },
+  ];
 
-  displayedColumns = ['id', 'skill', 'controls'];
+  thHead = Array(21)
+    .fill('')
+    .map((x, i) => i);
+
+  thBody = Array(20)
+    .fill('')
+    .map((x, i) => i);
 
   constructor() {}
 
