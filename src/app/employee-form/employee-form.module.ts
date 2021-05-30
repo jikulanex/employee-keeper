@@ -1,29 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { EmployeeFormRoutingModule } from './employee-form-routing.module';
 import { EmployeeFormHomeComponent } from './employee-form-home/employee-form-home.component';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatChipsModule } from '@angular/material/chips';
-
 // Load the shared module to get access to  the 'Form' component.
 import { SharedModule } from '../shared/shared.module';
+import { InputComponent } from './input/input.component';
+import { SelectComponent } from './select/select.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
-  declarations: [EmployeeFormHomeComponent],
-  imports: [
-    CommonModule,
-    EmployeeFormRoutingModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    SharedModule,
+  declarations: [
+    EmployeeFormHomeComponent,
+    InputComponent,
+    SelectComponent,
+    DatePickerComponent,
   ],
+  imports: [CommonModule, ReactiveFormsModule, EmployeeFormRoutingModule],
 })
 export class EmployeeFormModule {}
