@@ -1,5 +1,5 @@
 {
-  "name": "employees",
+  "name": "employee-keeper",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
