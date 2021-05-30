@@ -1,17 +1,76 @@
-<mat-toolbar color="primary" class="navbar">
-  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-    <mat-icon>menu</mat-icon>
-  </button>
+<nav class="navbar is-primary">
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item title is-6 is-capitalized pl-4" routerLink="">
+        Employee Keeper
+      </a>
+    </div>
+  </div>
+</nav>
 
-  <mat-menu #menu="matMenu">
-    <a mat-menu-item routerLink="/employee-form">Create new employee</a>
-    <a mat-menu-item routerLink="/skills-form">Create new skill</a>
-  </mat-menu>
+<div class="container">
+  <div class="columns">
+    <!-- Panel column -->
+    <div class="column is-one-third">
+      <!-- Panel component -->
+      <nav class="panel mt-5">
+        <!-- Panel title -->
+        <p class="panel-heading is-size-6">Menu</p>
 
-  <a mat-button routerLink="/employee-table" routerLinkActive="active"
-    >Employees</a
-  >
-  <a mat-button routerLink="/skill-table" routerLinkActive="active">Skills</a>
-</mat-toolbar>
+        <!-- Add employee link -->
+        <a
+          class="panel-block"
+          routerLink="/employee-form"
+          routerLinkActive="is-active"
+        >
+          <span class="panel-icon">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+          </span>
+          Add employee
+        </a>
 
-<router-outlet></router-outlet>
+        <!-- Add skill link -->
+        <a
+          class="panel-block"
+          routerLink="/skills-form"
+          routerLinkActive="is-active"
+        >
+          <span class="panel-icon">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+          </span>
+          Add skill
+        </a>
+
+        <!-- Employee table link -->
+        <a
+          class="panel-block"
+          routerLink="/employee-table"
+          routerLinkActive="is-active"
+        >
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          Employee table
+        </a>
+
+        <!-- Skill table link -->
+        <a
+          class="panel-block"
+          routerLink="/skill-table"
+          routerLinkActive="is-active"
+        >
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          Skill table
+        </a>
+      </nav>
+    </div>
+
+    <!-- Table column wrapped in a panel -->
+    <div class="column">
+      <!-- Dynamic router component -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
