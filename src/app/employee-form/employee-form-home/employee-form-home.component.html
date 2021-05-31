@@ -3,62 +3,70 @@
   <!-- Panel title -->
   <p class="panel-heading is-size-6">Add employee form</p>
 
-  <!-- First name text field -->
-  <div class="panel-block">
-    <app-input
-      label="First Name"
-      placeholder="John"
-      helperText="First name cannot be blank. Example: 'Peter', 'Paul', 'Merry'."
-      [control]="employeeForm.get('firstName')"
-    ></app-input>
-  </div>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <!-- First name text field -->
+    <div class="panel-block">
+      <app-input
+        label="First Name"
+        placeholder="John"
+        helperText="First name cannot be blank. Example: 'Peter', 'Paul', 'Merry'."
+        [control]="employeeForm.get('firstName')"
+      ></app-input>
+    </div>
 
-  <!-- Last name text field -->
-  <div class="panel-block">
-    <app-input
-      label="Last Name"
-      placeholder="Appleseed"
-      helperText="Last name cannot be blank. Example: 'Smith', 'Anderson', 'Johnson'."
-      [control]="employeeForm.get('lastName')"
-    ></app-input>
-  </div>
+    <!-- Last name text field -->
+    <div class="panel-block">
+      <app-input
+        label="Last Name"
+        placeholder="Appleseed"
+        helperText="Last name cannot be blank. Example: 'Smith', 'Anderson', 'Johnson'."
+        [control]="employeeForm.get('lastName')"
+      ></app-input>
+    </div>
 
-  <!-- Skills text field -->
-  <div class="panel-block">
-    <app-select
-      label="Skills"
-      helperText="Skills must be filled out. Example: 'HTML', 'CSS', 'JavaScript'."
-      [options]="options"
-      [control]="employeeForm.get('skills')"
-    ></app-select>
-  </div>
+    <!-- Skills text field -->
+    <div class="panel-block">
+      <app-select
+        label="Skills"
+        helperText="Skills must be filled out. Example: 'HTML', 'CSS', 'JavaScript'."
+        [options]="options"
+        [control]="employeeForm.get('skills')"
+      ></app-select>
+    </div>
 
-  <!-- Birthdate date picker -->
-  <div class="panel-block">
-    <app-date-picker
-      label="Birthdate"
-      helperText="Birthdate cannot be blank. Please input birthdate info."
-      [control]="employeeForm.get('birthDate')"
-    ></app-date-picker>
-  </div>
+    <!-- Birthdate date picker -->
+    <div class="panel-block">
+      <app-date-picker
+        label="Birthdate"
+        helperText="Birthdate cannot be blank. Please input birthdate info."
+        [control]="employeeForm.get('birthDate')"
+      ></app-date-picker>
+    </div>
 
-  <!-- Save button -->
-  <div class="panel-block">
-    <button class="button is-primary is-fullwidth">Save</button>
-  </div>
+    <!-- Save button -->
+    <div class="panel-block">
+      <button
+        type="submit"
+        class="button is-primary is-fullwidth"
+        [disabled]="employeeForm.invalid"
+      >
+        Save
+      </button>
+    </div>
 
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Form contents {{ employeeForm.value | json }}</div>
-  </div> -->
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form contents {{ employeeForm.value | json }}</div>
+    </div> -->
 
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Form is valid {{ employeeForm.valid }}</div>
-  </div> -->
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form is valid {{ employeeForm.valid }}</div>
+    </div> -->
 
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Errors around name {{ employeeForm.controls.birthDate.errors | json }}</div>
-  </div> -->
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Errors around name {{ employeeForm.controls.birthDate.errors | json }}</div>
+    </div> -->
+  </form>
 </div>

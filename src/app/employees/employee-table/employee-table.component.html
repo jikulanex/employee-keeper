@@ -22,88 +22,13 @@
 
       <!-- Table body -->
       <tbody>
-        <tr>
-          <th>0</th>
-          <th>Siegfred</th>
-          <th>Balona</th>
-          <th>July 31, 1988</th>
-          <th>32</th>
-          <th>HTML, CSS, JavaScript</th>
-          <th>
-            <div class="buttons">
-              <button class="button is-light is-primary is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-edit" aria-hidden="true"></i>
-                </span>
-                Edit
-              </button>
-              <button class="button is-light is-danger is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-trash" aria-hidden="true"></i>
-                </span>
-                Delete
-              </button>
-            </div>
-          </th>
-        </tr>
-
-        <tr>
-          <th>0</th>
-          <th>Siegfred</th>
-          <th>Balona</th>
-          <th>July 31, 1988</th>
-          <th>32</th>
-          <th>HTML, CSS, JavaScript</th>
-          <th>
-            <div class="buttons">
-              <button class="button is-light is-primary is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-edit" aria-hidden="true"></i>
-                </span>
-                Edit
-              </button>
-              <button class="button is-light is-danger is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-trash" aria-hidden="true"></i>
-                </span>
-                Delete
-              </button>
-            </div>
-          </th>
-        </tr>
-
-        <tr>
-          <th>0</th>
-          <th>Siegfred</th>
-          <th>Balona</th>
-          <th>July 31, 1988</th>
-          <th>32</th>
-          <th>HTML, CSS, JavaScript</th>
-          <th>
-            <div class="buttons">
-              <button class="button is-light is-primary is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-edit" aria-hidden="true"></i>
-                </span>
-                Edit
-              </button>
-              <button class="button is-light is-danger is-small">
-                <span class="panel-icon">
-                  <i class="fas fa-trash" aria-hidden="true"></i>
-                </span>
-                Delete
-              </button>
-            </div>
-          </th>
-        </tr>
-
-        <tr>
-          <th>0</th>
-          <th>Siegfred</th>
-          <th>Balona</th>
-          <th>July 31, 1988</th>
-          <th>32</th>
-          <th>HTML, CSS, JavaScript</th>
+        <tr *ngFor="let employee of employeeData">
+          <th>{{ employee.id }}</th>
+          <th>{{ employee.firstName }}</th>
+          <th>{{ employee.lastName }}</th>
+          <th>{{ employee.birthDate | date }}</th>
+          <th>{{ getAge(employee.birthDate) }}</th>
+          <th>{{ displaySkills(employee.skills) }}</th>
           <th>
             <div class="buttons">
               <button class="button is-light is-primary is-small">

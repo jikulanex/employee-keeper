@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EmployeeService } from '../../services/employee-service.service';
 
 interface Skill {
   id: number;
   name: string;
+}
+
+interface Employee {
+  id: number;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  skills: Array<Skill>;
 }
 
 @Component({
@@ -12,10 +21,6 @@ interface Skill {
   styleUrls: ['./employee-form-home.component.css'],
 })
 export class EmployeeFormHomeComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-
   employeeForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
@@ -30,12 +35,31 @@ export class EmployeeFormHomeComponent implements OnInit {
   });
 
   options: Skill[] = [
-    { id: 0, name: 'HTML' },
-    { id: 1, name: 'CSS' },
-    { id: 2, name: 'JavaScript' },
-    { id: 3, name: 'Node.js' },
-    { id: 4, name: 'Angular' },
-    { id: 5, name: 'Vue.js' },
-    { id: 6, name: 'React.js' },
+    { id: 1, name: 'HTML' },
+    { id: 2, name: 'CSS' },
+    { id: 3, name: 'JavaScript' },
+    { id: 4, name: 'Node.js' },
+    { id: 5, name: 'Angular' },
+    { id: 6, name: 'Vue.js' },
+    { id: 7, name: 'React.js' },
   ];
+
+  employees: Array<Employee> = [];
+
+  constructor(private employeeService: EmployeeService) {}
+
+  ngOnInit(): void {
+    this.employees = this.employeeService.getEmployees();
+  }
+
+  onSubmit() {
+    console.info('Form submitted', this.employeeForm.value);
+
+    const employee = {
+      id: this.employees.length + 1,
+      ...this.employeeForm.value,
+    };
+
+    this.employeeService.setEmployees(employee);
+  }
 }
