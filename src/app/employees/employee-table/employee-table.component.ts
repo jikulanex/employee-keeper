@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee-service.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
   id: number;
@@ -22,7 +23,7 @@ interface Employee {
 export class EmployeeTableComponent implements OnInit {
   today = new Date().getFullYear();
 
-  employeeData: Array<Employee> = [];
+  employees: Array<Employee> = [];
 
   displayedColumns = [
     'id',
@@ -34,10 +35,20 @@ export class EmployeeTableComponent implements OnInit {
     'controls',
   ];
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.employeeData = this.employeeService.getEmployees();
+    const data: any = this.localStorageService.getItem('employees');
+
+    if (data?.length) {
+      this.employees = JSON.parse(data);
+      return;
+    }
+
+    this.employees = this.employeeService.getEmployees();
   }
 
   getAge(birthDate: string) {
