@@ -23,6 +23,8 @@ interface Employee {
   styleUrls: ['./employee-form-home.component.css'],
 })
 export class EmployeeFormHomeComponent implements OnInit {
+  formIsSubmitted = false;
+
   employeeForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
@@ -80,5 +82,15 @@ export class EmployeeFormHomeComponent implements OnInit {
 
     // Clear input fields.
     this.employeeForm.reset();
+
+    this.displayNotification();
+  }
+
+  displayNotification() {
+    this.formIsSubmitted = true;
+
+    setTimeout(() => {
+      this.formIsSubmitted = false;
+    }, 2000);
   }
 }

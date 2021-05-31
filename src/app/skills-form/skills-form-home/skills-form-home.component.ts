@@ -14,6 +14,8 @@ interface Skill {
   styleUrls: ['./skills-form-home.component.css'],
 })
 export class SkillsFormHomeComponent implements OnInit {
+  formIsSubmitted = false;
+
   skillsForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
   });
@@ -42,5 +44,15 @@ export class SkillsFormHomeComponent implements OnInit {
 
     // Clear input field.
     this.skillsForm.reset();
+
+    this.displayNotification();
+  }
+
+  displayNotification() {
+    this.formIsSubmitted = true;
+
+    setTimeout(() => {
+      this.formIsSubmitted = false;
+    }, 2000);
   }
 }
