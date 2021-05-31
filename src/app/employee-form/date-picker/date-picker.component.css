@@ -1,6 +1,0 @@
-/* Style for the host component, i.e., the `app-date-picker` component itself. */
-:host {
-  width: 100%;
-  display: grid;
-  gap: 8px;
-}
