@@ -8,6 +8,7 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { InputComponent } from './input/input.component';
 import { SelectComponent } from './select/select.component';
+import { UpdateEmployeeFormComponent } from './update-employee-form/update-employee-form.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SelectComponent } from './select/select.component';
     DatePickerComponent,
     InputComponent,
     SelectComponent,
+    UpdateEmployeeFormComponent,
   ],
   imports: [CommonModule, EmployeesRoutingModule, ReactiveFormsModule],
 })
