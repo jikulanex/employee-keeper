@@ -25,8 +25,13 @@ export class EmployeeService {
     return this.employees;
   }
 
-  setEmployees(employee: Employee) {
+  setEmployee(employee: Employee) {
     this.employees = [...this.employees, employee];
     console.info('Updated employee data', this.employees);
+  }
+
+  updateEmployees(employeeData: Array<Employee>) {
+    this.employees = [...employeeData];
+    console.info('Mutated employee data', this.employees);
   }
 }
