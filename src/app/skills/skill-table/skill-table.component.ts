@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SkillService } from '../../services/skill-service.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
   id: number;
@@ -22,9 +23,19 @@ export class SkillTableComponent implements OnInit {
     .fill('')
     .map((x, i) => i);
 
-  constructor(private skillService: SkillService) {}
+  constructor(
+    private skillService: SkillService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
+    const data: any = this.localStorageService.getItem('skills');
+
+    if (data?.length) {
+      this.skills = JSON.parse(data);
+      return;
+    }
+
     this.skills = this.skillService.getSkills();
   }
 }
