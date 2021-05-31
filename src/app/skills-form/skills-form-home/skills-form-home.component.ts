@@ -39,5 +39,8 @@ export class SkillsFormHomeComponent implements OnInit {
 
     // Store the skills array data to local storage.
     this.localStorageService.setItem('skills', this.skillService.getSkills());
+
+    // Clear input field.
+    this.skillsForm.reset();
   }
 }

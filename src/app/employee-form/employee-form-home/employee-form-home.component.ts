@@ -77,5 +77,8 @@ export class EmployeeFormHomeComponent implements OnInit {
       'employees',
       this.employeeService.getEmployees()
     );
+
+    // Clear input fields.
+    this.employeeForm.reset();
   }
 }
