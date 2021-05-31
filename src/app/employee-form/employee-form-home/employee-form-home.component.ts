@@ -48,6 +48,16 @@ export class EmployeeFormHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.employees = this.employeeService.getEmployees();
+
+    // Fetch skills data stored from local storage
+    const skillsData: any = this.localStorageService.getItem('skills');
+
+    // When skills data exist from local storage, assign it to `skills` class property.
+    if (skillsData?.length) {
+      this.skills = JSON.parse(skillsData);
+      return;
+    }
+
     this.skills = this.skillService.getSkills();
   }
 
