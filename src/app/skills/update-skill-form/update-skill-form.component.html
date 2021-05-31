@@ -1,0 +1,46 @@
+<!-- Panel component -->
+<div class="panel mt-5">
+  <!-- Panel title -->
+  <p class="panel-heading is-size-6">Update skill form</p>
+
+  <!-- Form component -->
+  <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+    <!-- Input component -->
+    <app-input
+      label="Skill name"
+      [control]="skillsForm.get('name')"
+    ></app-input>
+
+    <!-- Panel block -->
+    <div class="panel-block">
+      <!-- Save button -->
+      <button
+        class="button is-primary is-fullwidth"
+        [disabled]="skillsForm.invalid"
+      >
+        Save
+      </button>
+    </div>
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form contents {{ skillsForm.value | json }}</div>
+    </div> -->
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form is valid {{ skillsForm.valid }}</div>
+    </div> -->
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Errors around name {{ skillsForm.controls.name.errors | json }}</div>
+    </div> -->
+  </form>
+</div>
+
+<div class="notification is-primary is-light" *ngIf="formIsSubmitted">
+  <button class="delete"></button>
+  <h1 class="title is-size-6 mb-2">Success!</h1>
+  <p>Skill has been updated</p>
+</div>
