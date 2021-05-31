@@ -37,7 +37,7 @@ export class SkillFormComponent implements OnInit {
     const skill = { id: this.skills.length + 1, ...this.skillsForm.value };
 
     // Update the skills array data.
-    this.skillService.setSkills(skill);
+    this.skillService.setSkill(skill);
 
     // Store the skills array data to local storage.
     this.localStorageService.setItem('skills', this.skillService.getSkills());
