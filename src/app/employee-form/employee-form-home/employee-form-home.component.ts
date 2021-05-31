@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee-service.service';
+import { SkillService } from '../../services/skill-service.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
   id: number;
@@ -34,22 +36,19 @@ export class EmployeeFormHomeComponent implements OnInit {
     birthDate: new FormControl('', [Validators.required]),
   });
 
-  options: Skill[] = [
-    { id: 1, name: 'HTML' },
-    { id: 2, name: 'CSS' },
-    { id: 3, name: 'JavaScript' },
-    { id: 4, name: 'Node.js' },
-    { id: 5, name: 'Angular' },
-    { id: 6, name: 'Vue.js' },
-    { id: 7, name: 'React.js' },
-  ];
-
   employees: Array<Employee> = [];
 
-  constructor(private employeeService: EmployeeService) {}
+  skills: Array<Skill> = [];
+
+  constructor(
+    private employeeService: EmployeeService,
+    private skillService: SkillService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.employees = this.employeeService.getEmployees();
+    this.skills = this.skillService.getSkills();
   }
 
   onSubmit() {
@@ -60,6 +59,13 @@ export class EmployeeFormHomeComponent implements OnInit {
       ...this.employeeForm.value,
     };
 
+    // Update the employee array data.
     this.employeeService.setEmployees(employee);
+
+    // Store the employee array data to local storage.
+    this.localStorageService.setItem(
+      'employees',
+      this.employeeService.getEmployees()
+    );
   }
 }
