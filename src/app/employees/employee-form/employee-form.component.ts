@@ -72,7 +72,7 @@ export class EmployeeFormComponent implements OnInit {
     };
 
     // Update the employee array data.
-    this.employeeService.setEmployees(employee);
+    this.employeeService.setEmployee(employee);
 
     // Store the employee array data to local storage.
     this.localStorageService.setItem(
