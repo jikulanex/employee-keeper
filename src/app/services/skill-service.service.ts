@@ -25,8 +25,13 @@ export class SkillService {
     return this.skills;
   }
 
-  setSkills(employee: Skill) {
-    this.skills = [...this.skills, employee];
+  setSkill(skill: Skill) {
+    this.skills = [...this.skills, skill];
     console.info('Updated skills data', this.skills);
+  }
+
+  updateSkills(skillsData: Array<Skill>) {
+    this.skills = [...skillsData];
+    console.info('Mutated skills data', this.skills);
   }
 }
