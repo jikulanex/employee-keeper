@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SkillService } from '../../services/skill-service.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
   id: number;
@@ -19,7 +20,10 @@ export class SkillsFormHomeComponent implements OnInit {
 
   skills: Array<Skill> = [];
 
-  constructor(private skillService: SkillService) {}
+  constructor(
+    private skillService: SkillService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.skills = this.skillService.getSkills();
@@ -30,6 +34,10 @@ export class SkillsFormHomeComponent implements OnInit {
 
     const skill = { id: this.skills.length + 1, ...this.skillsForm.value };
 
+    // Update the skills array data.
     this.skillService.setSkills(skill);
+
+    // Store the skills array data to local storage.
+    this.localStorageService.setItem('skills', this.skillService.getSkills());
   }
 }
