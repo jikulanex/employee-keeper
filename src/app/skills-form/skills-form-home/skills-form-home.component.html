@@ -4,26 +4,37 @@
   <p class="panel-heading is-size-6">Add skill form</p>
 
   <!-- Form component -->
-  <form>
+  <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
     <!-- Input component -->
     <app-input
       label="Skill name"
       [control]="skillsForm.get('name')"
     ></app-input>
+
+    <!-- Panel block -->
+    <div class="panel-block">
+      <!-- Save button -->
+      <button
+        class="button is-primary is-fullwidth"
+        [disabled]="skillsForm.invalid"
+      >
+        Save
+      </button>
+    </div>
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form contents {{ skillsForm.value | json }}</div>
+    </div> -->
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Form is valid {{ skillsForm.valid }}</div>
+    </div> -->
+
+    <!-- Enable only during debugging -->
+    <!-- <div class="panel-block">
+      <div>Errors around name {{ skillsForm.controls.name.errors | json }}</div>
+    </div> -->
   </form>
-
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Form contents {{ skillsForm.value | json }}</div>
-  </div> -->
-
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Form is valid {{ skillsForm.valid }}</div>
-  </div> -->
-
-  <!-- Enable only during debugging -->
-  <!-- <div class="panel-block">
-    <div>Errors around name {{ skillsForm.controls.name.errors | json }}</div>
-  </div> -->
 </div>

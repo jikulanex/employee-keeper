@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SkillService } from '../../services/skill-service.service';
+
+interface Skill {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-skills-form-home',
@@ -11,9 +17,19 @@ export class SkillsFormHomeComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
   });
 
-  constructor() {
-    console.log(this.skillsForm.controls.name);
+  skills: Array<Skill> = [];
+
+  constructor(private skillService: SkillService) {}
+
+  ngOnInit(): void {
+    this.skills = this.skillService.getSkills();
   }
 
-  ngOnInit(): void {}
+  onSubmit() {
+    console.info('Form submitted', this.skillsForm.value);
+
+    const skill = { id: this.skills.length + 1, ...this.skillsForm.value };
+
+    this.skillService.setSkills(skill);
+  }
 }
