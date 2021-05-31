@@ -1,0 +1,15 @@
+/* Style for the host component, i.e., the `app-select` component itself. */
+:host {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+}
+
+/* Style for the select wrapper (div) component. */
+.select-component {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 146px;
+  align-items: start;
+}

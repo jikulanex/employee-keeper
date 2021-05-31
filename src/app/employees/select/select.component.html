@@ -1,0 +1,24 @@
+<label>{{ label }}</label>
+
+<div class="select-component">
+  <div class="control has-icons-left width-100">
+    <div class="select is-primary is-fullwidth">
+      <select multiple [formControl]="control">
+        <option value="" disabled>Select skill</option>
+        <option *ngFor="let option of options" [ngValue]="option">
+          {{ option.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="icon is-small is-left">
+      <i class="fas fa-code"></i>
+    </div>
+
+    <ng-container *ngIf="displayErrorHelperText()">
+      <div class="help is-danger" *ngIf="control.errors.required">
+        {{ helperText }}
+      </div>
+    </ng-container>
+  </div>
+</div>
