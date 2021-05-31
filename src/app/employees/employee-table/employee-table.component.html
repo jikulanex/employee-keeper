@@ -31,13 +31,19 @@
           <th>{{ displaySkills(employee.skills) }}</th>
           <th>
             <div class="buttons">
-              <button class="button is-light is-primary is-small">
+              <button
+                class="button is-light is-primary is-small"
+                (click)="editEmployee(employee)"
+              >
                 <span class="panel-icon">
                   <i class="fas fa-edit" aria-hidden="true"></i>
                 </span>
                 Edit
               </button>
-              <button class="button is-light is-danger is-small">
+              <button
+                class="button is-light is-danger is-small"
+                (click)="deleteEmployee(employee)"
+              >
                 <span class="panel-icon">
                   <i class="fas fa-trash" aria-hidden="true"></i>
                 </span>
@@ -49,4 +55,10 @@
       </tbody>
     </table>
   </div>
+</div>
+
+<div class="notification is-danger is-light" *ngIf="formIsSubmitted">
+  <button class="delete"></button>
+  <h1 class="title is-size-6 mb-2">Success!</h1>
+  <p>Skill has been removed</p>
 </div>
