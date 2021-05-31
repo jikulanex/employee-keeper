@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { SkillService } from '../../services/skill-service.service';
+
+interface Skill {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-skill-table',
@@ -6,12 +12,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./skill-table.component.css'],
 })
 export class SkillTableComponent implements OnInit {
-  skillData = [
-    { id: 0, name: 'HTML' },
-    { id: 1, name: 'CSS' },
-    { id: 2, name: 'JavaScript' },
-    { id: 3, name: 'Node.js' },
-  ];
+  skills: Array<Skill> = [];
 
   thHead = Array(21)
     .fill('')
@@ -21,7 +22,9 @@ export class SkillTableComponent implements OnInit {
     .fill('')
     .map((x, i) => i);
 
-  constructor() {}
+  constructor(private skillService: SkillService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.skills = this.skillService.getSkills();
+  }
 }
