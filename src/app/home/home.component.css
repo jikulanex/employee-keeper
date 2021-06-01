@@ -1,8 +1,6 @@
 .home {
   width: 100%;
-  height: 148px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 248px;
+  text-align: center;
+  padding-top: 70px;
 }

@@ -6,29 +6,30 @@
   <!-- Panel block -->
   <div class="panel-block pb-4">
     <!-- Table component -->
-    <table class="table is-striped">
+    <table class="table is-striped is-fullwidth">
       <!-- Table head -->
       <thead>
         <tr>
-          <th>Id</th>
+          <th width="8%">Id</th>
           <th>Skill Name</th>
+          <th></th>
 
           <!-- Generate 21 'th' element -->
-          <th *ngFor="let item of thHead"></th>
+          <!-- <th *ngFor="let item of thHead"></th> -->
         </tr>
       </thead>
 
       <!-- Table body -->
       <tbody>
         <tr *ngFor="let item of skills">
-          <th>{{ item.id }}</th>
-          <th>{{ item.name }}</th>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
 
           <!-- Generate 20 'th' element -->
-          <th *ngFor="let number of thBody"></th>
+          <!-- <th *ngFor="let number of thBody"></th> -->
 
-          <th>
-            <div class="buttons ml-auto">
+          <td>
+            <div class="buttons is-justify-content-flex-end">
               <button
                 class="button is-light is-primary is-small"
                 (click)="editSkill(item)"
@@ -48,7 +49,7 @@
                 Delete
               </button>
             </div>
-          </th>
+          </td>
         </tr>
       </tbody>
     </table>

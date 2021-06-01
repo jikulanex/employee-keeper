@@ -4,7 +4,7 @@
   <p class="panel-heading is-size-6">Add skill form</p>
 
   <!-- Form component -->
-  <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+  <form class="mt-4" [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
     <!-- Input component -->
     <app-input
       label="Skill name"
@@ -12,13 +12,16 @@
     ></app-input>
 
     <!-- Panel block -->
-    <div class="panel-block">
+    <div class="panel-block pb-5">
       <!-- Save button -->
       <button
-        class="button is-primary is-fullwidth"
+        class="button is-link is-fullwidth"
         [disabled]="skillsForm.invalid"
       >
-        Save
+        <span class="icon">
+          <i class="fas fa-check"></i>
+        </span>
+        <span>Save</span>
       </button>
     </div>
 

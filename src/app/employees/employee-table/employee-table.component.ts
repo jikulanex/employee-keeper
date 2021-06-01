@@ -22,6 +22,8 @@ interface Employee {
   styleUrls: ['./employee-table.component.css'],
 })
 export class EmployeeTableComponent implements OnInit {
+  modalIsOpen = false;
+
   formIsSubmitted = false;
 
   today = new Date().getFullYear();
@@ -58,19 +60,36 @@ export class EmployeeTableComponent implements OnInit {
     console.log('Existing employee data', this.employees);
   }
 
+  // Displays the employee details.
+  displayEmployeeDetails() {
+    this.modalIsOpen = true;
+  }
+
+  // Hides the employee details.
+  hideEmployeeDetails() {
+    this.modalIsOpen = false;
+  }
+
+  // Computes the age based on the given birthdate.
   getAge(birthDate: string) {
     return this.today - new Date(birthDate).getFullYear();
   }
 
+  // Displays on 3 skills in the table and hides the rest.
   displaySkills(skills: Array<Skill>) {
-    return skills.map((skill) => skill.name).join(', ');
+    return skills
+      .map((skill) => skill.name)
+      .slice(0, 3)
+      .join(', ');
   }
 
+  // Navigate to the update employee form.
   editEmployee(employee: Employee) {
     console.log('Employee data', employee);
     this.router.navigate([`/update-employee-form/${employee.id}`]);
   }
 
+  // Deletes one employee.
   deleteEmployee(employee: Employee) {
     // Filter out data based on the given skill id.
     const updatedEmployeeData = this.employees.filter(
@@ -93,6 +112,7 @@ export class EmployeeTableComponent implements OnInit {
     this.displayNotification();
   }
 
+  // Displays the notification component.
   displayNotification() {
     this.formIsSubmitted = true;
 

@@ -5,17 +5,17 @@
 
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
     <!-- First name text field -->
-    <div class="panel-block">
+    <div class="panel-block py-4">
       <app-input
         label="First Name"
         placeholder="John"
-        helperText="First name cannot be blank. Example: 'Peter', 'Paul', 'Merry'."
+        helperText="First name cannot be blank. Example: 'Peter', 'Paul', 'Mary'."
         [control]="employeeForm.get('firstName')"
       ></app-input>
     </div>
 
     <!-- Last name text field -->
-    <div class="panel-block">
+    <div class="panel-block py-4">
       <app-input
         label="Last Name"
         placeholder="Appleseed"
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Skills text field -->
-    <div class="panel-block">
+    <div class="panel-block py-4">
       <app-select
         label="Skills"
         helperText="Skills must be filled out. Example: 'HTML', 'CSS', 'JavaScript'."
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Birthdate date picker -->
-    <div class="panel-block">
+    <div class="panel-block py-4">
       <app-date-picker
         label="Birthdate"
         helperText="Birthdate cannot be blank. Please input birthdate info."
@@ -44,13 +44,16 @@
     </div>
 
     <!-- Save button -->
-    <div class="panel-block">
+    <div class="panel-block py-5">
       <button
         type="submit"
-        class="button is-primary is-fullwidth"
+        class="button is-link is-fullwidth"
         [disabled]="employeeForm.invalid"
       >
-        Save
+        <span class="icon">
+          <i class="fas fa-check"></i>
+        </span>
+        <span>Save</span>
       </button>
     </div>
 
