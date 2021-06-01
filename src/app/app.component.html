@@ -1,4 +1,4 @@
-<nav class="navbar is-primary">
+<nav class="navbar is-link">
   <div class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item title is-6 is-capitalized pl-4" routerLink="">
@@ -17,53 +17,75 @@
         <!-- Panel title -->
         <p class="panel-heading is-size-6">Menu</p>
 
-        <!-- Add employee link -->
-        <a
-          class="panel-block"
-          routerLink="/employee-form"
-          routerLinkActive="is-active"
-        >
-          <span class="panel-icon">
-            <i class="fas fa-plus" aria-hidden="true"></i>
-          </span>
-          Add employee
-        </a>
+        <div class="panel-block grid">
+          <aside class="menu mt-4">
+            <!-- Employees menu label -->
+            <p class="menu-label">Employees</p>
 
-        <!-- Employee table link -->
-        <a
-          class="panel-block"
-          routerLink="/employee-table"
-          routerLinkActive="is-active"
-        >
-          <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-          </span>
-          Employee table
-        </a>
+            <ul class="menu-list">
+              <!-- Add employee link -->
+              <li>
+                <a
+                  class="menu-link"
+                  routerLink="/employee-form"
+                  routerLinkActive="is-active"
+                >
+                  <span>Add employee</span>
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </a>
+              </li>
 
-        <!-- Add skill link -->
-        <a
-          class="panel-block"
-          routerLink="/skill-form"
-          routerLinkActive="is-active"
-        >
-          <span class="panel-icon">
-            <i class="fas fa-plus" aria-hidden="true"></i>
-          </span>
-          Add skill
-        </a>
+              <!-- View employee table link -->
+              <li>
+                <a
+                  class="menu-link"
+                  routerLink="/employee-table"
+                  routerLinkActive="is-active"
+                >
+                  <span>View employee table</span>
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
 
-        <!-- Skill table link -->
-        <a
-          class="panel-block"
-          routerLink="/skill-table"
-          routerLinkActive="is-active"
-        >
-          <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
-          </span>
-          Skill table
-        </a>
+            <!-- Skills menu label -->
+            <p class="menu-label">Skills</p>
+
+            <ul class="menu-list">
+              <!-- Add skill link -->
+              <li>
+                <a
+                  class="menu-link"
+                  routerLink="/skill-form"
+                  routerLinkActive="is-active"
+                >
+                  <span>Add skill</span>
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </a>
+              </li>
+
+              <!-- View skill table link -->
+              <li>
+                <a
+                  class="menu-link"
+                  routerLink="/skill-table"
+                  routerLinkActive="is-active"
+                >
+                  <span>View skill table</span>
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </aside>
+        </div>
       </nav>
     </div>
 
