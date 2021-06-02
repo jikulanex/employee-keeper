@@ -11,3 +11,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.marker {
+  height: 10px;
+  background-color: #57c1ff;
+}
