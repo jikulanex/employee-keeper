@@ -10,7 +10,7 @@
       <!-- Table head -->
       <thead>
         <tr>
-          <th>Id</th>
+          <!-- <th>Id</th> -->
           <th>First Name</th>
           <th>Last Name</th>
           <th>Birthdate</th>
@@ -23,9 +23,9 @@
       <!-- Table body -->
       <tbody>
         <tr *ngFor="let employee of employees">
-          <th>
-            <a (click)="displayEmployeeDetails()">{{ employee.id }}</a>
-          </th>
+          <!-- <th>
+            <a (click)="displayEmployeeDetails()">{{ employee._id.slice(0, 8) }}</a>
+          </th> -->
           <th>{{ employee.firstName }}</th>
           <th>{{ employee.lastName }}</th>
           <th>{{ employee.birthDate | date }}</th>
