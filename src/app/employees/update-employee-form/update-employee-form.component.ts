@@ -2,21 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { SkillService } from '../../services/skill-service.service';
-import { EmployeeService } from '../../services/employee-service.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { SkillService } from 'src/app/services/skill-service.service';
+import { EmployeeService } from 'src/app/services/employee-service.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 interface Employee {
-  id: number;
+  _id: string;
   firstName: string;
   lastName: string;
   birthDate: string;
   skills: Array<Skill>;
+  __v?: number;
 }
 
 @Component({
@@ -25,9 +27,9 @@ interface Employee {
   styleUrls: ['./update-employee-form.component.css'],
 })
 export class UpdateEmployeeFormComponent implements OnInit {
-  employee: any;
+  employee!: Employee;
   employees: Array<Employee> = [];
-  employeeId!: number;
+  employeeId!: string;
   skills: Array<Skill> = [];
   formIsSubmitted = false;
 
@@ -52,67 +54,97 @@ export class UpdateEmployeeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const localStorageEmployeeData: any =
-      this.localStorageService.getItem('employees');
-    const localStorageSkillsData: any =
-      this.localStorageService.getItem('skills');
-
     // Fetch existing employee data.
-    if (localStorageEmployeeData?.length) {
-      this.employees = JSON.parse(localStorageEmployeeData);
-    } else {
-      this.employees = this.employeeService.getEmployees();
-    }
-    console.info('Existing employees', this.employees);
+    const localStorageEmployeeData: string | null =
+      this.localStorageService.getItem('employees');
+
+    this.employeeService.getEmployees().subscribe((response: any) => {
+      if (localStorageEmployeeData?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (localStorageEmployeeData?.length < response.data?.length) {
+          console.info('Http get response', response);
+
+          // Assign the data from database.
+          this.employees = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.employees = JSON.parse(localStorageEmployeeData);
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.employees = response.data;
+    });
 
     // Fetch existing skill data.
-    if (localStorageSkillsData?.length) {
-      this.skills = JSON.parse(localStorageSkillsData);
-    } else {
-      this.skills = this.skillService.getSkills();
-    }
-    console.info('Existing skills', this.skills);
+    const localStorageSkillData: string | null =
+      this.localStorageService.getItem('skills');
+
+    this.skillService.getSkills().subscribe((response: any) => {
+      if (localStorageSkillData?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (localStorageSkillData?.length < response.data?.length) {
+          console.info('Http get response', response);
+
+          // Assign the data from database.
+          this.skills = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.skills = JSON.parse(localStorageSkillData);
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.skills = response.data;
+    });
 
     // Fetch employee ID data.
     this.employeeId = this.activatedRoute.snapshot.params['id'];
     console.info('Fetch employee ID', this.employeeId);
 
     // Extract employee data with the given ID.
-    this.employee = this.employees.find(
-      (employee) => employee.id === Number(this.employeeId)
-    );
-    console.info('Fetched employee data', this.employee);
+    this.employeeService
+      .getEmployee(this.employeeId)
+      .subscribe((response: any) => {
+        const employeeData = response.data;
+        console.info('Fetched employee data', employeeData);
 
-    // Programmatically set the text field with the skill name data.
-    this.employeeForm.setValue({
-      firstName: this.employee?.firstName,
-      lastName: this.employee?.lastName,
-      skills: this.employee?.skills,
-      birthDate: this.employee?.birthDate,
-    });
+        this.employee = employeeData;
+        // Programmatically set the text field with the employee data.
+        this.employeeForm.setValue({
+          firstName: this.employee?.firstName,
+          lastName: this.employee?.lastName,
+          skills: this.employee?.skills,
+          birthDate: this.employee?.birthDate.slice(0, 10),
+        });
+      });
   }
 
   onSubmit() {
     console.info('Form data submitted', this.employeeForm.value);
 
-    // Update the existing skill data by inserting the new skill name data.
-    const updatedSkillData: Array<Employee> = this.employees.map((employee) => {
-      if (employee.id === Number(this.employeeId)) {
-        return { ...employee, ...this.employeeForm.value };
-      }
-      return employee;
-    });
+    // Update the employees array data.
+    this.employeeService
+      .updateEmployee(this.employeeId, this.employeeForm.value)
+      .subscribe((response) => {
+        console.info('Http put response', response);
 
-    // Update the skills array data.
-    this.employeeService.updateEmployees(updatedSkillData);
+        this.employeeService.getEmployees().subscribe((response: any) => {
+          console.info('Http get response', response);
 
-    // Store the skills array data to local storage.
-    this.localStorageService.setItem('employees', updatedSkillData);
+          // Store the employees array data to local storage.
+          this.localStorageService.setItem('employees', response.data);
 
-    // Clear input field.
-    this.employeeForm.reset();
+          // Clear input field.
+          this.employeeForm.reset();
 
-    this.displayNotification();
+          this.displayNotification();
+        });
+      });
   }
 
   displayNotification() {
