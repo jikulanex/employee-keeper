@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { SkillService } from '../../services/skill-service.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { SkillService } from 'src/app/services/skill-service.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Skill {
   _id: string;
