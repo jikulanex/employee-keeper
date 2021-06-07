@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,12 +15,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
   declarations: [AppComponent, HomeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
-    EmployeesModule, // Load 'Employee table' module.
-    SkillsModule, // Load 'Skill table' module.
-    // Important note:
-    // The 'App module' must be put below other existing modules to avoid
-    // conflicts during the path resolution process.
-    AppRoutingModule, // App module
+    HttpClientModule /* Load the `HttpClientModuel`. */,
+    EmployeesModule /* Load 'Employee table' module. */,
+    SkillsModule /* Load 'Skill table' module. */,
+    /* Important note: */
+    /* The 'App module' must be put below other existing modules to avoid conflicts during the path resolution process. */
+    AppRoutingModule /* App module */,
   ],
   providers: [],
   bootstrap: [AppComponent],
