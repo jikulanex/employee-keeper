@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SkillService } from '../../services/skill-service.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { SkillService } from 'src/app/services/skill-service.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 @Component({
@@ -35,36 +36,47 @@ export class SkillTableComponent implements OnInit {
     // Fetch existing skill data.
     const data: any = this.localStorageService.getItem('skills');
 
-    if (data?.length) {
-      this.skills = JSON.parse(data);
-      return;
-    }
+    this.skillService.getSkills().subscribe((response: any) => {
+      if (data?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (data?.length < response.data?.length) {
+          console.info('Http get response', response);
 
-    this.skills = this.skillService.getSkills();
+          // Assign the data from database.
+          this.skills = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.skills = JSON.parse(data);
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.skills = response.data;
+    });
   }
 
   editSkill(skill: Skill) {
     console.log('Skill data', skill);
-    this.router.navigate([`/update-skill-form/${skill.id}`]);
+    this.router.navigate([`/update-skill-form/${skill._id}`]);
   }
 
   deleteSkill(skill: Skill) {
-    // Filter out data based on the given skill id.
-    const updatedSkillData = this.skills.filter(
-      (data) => data.id !== Number(skill.id)
-    );
-    console.log('Updated skill data', updatedSkillData);
-
     // Update the skills array data.
-    this.skillService.updateSkills(updatedSkillData);
+    this.skillService.deleteSkill(skill._id).subscribe((response) => {
+      console.log('Http delete response', response);
 
-    // Store the skills array data to local storage.
-    this.localStorageService.setItem('skills', this.skillService.getSkills());
+      this.skillService.getSkills().subscribe((response: any) => {
+        // Store the skills array data to local storage.
+        this.localStorageService.setItem('skills', response.data);
 
-    // Reload page
-    window.location.reload();
+        // Reload page
+        window.location.reload();
 
-    this.displayNotification();
+        this.displayNotification();
+      });
+    });
   }
 
   displayNotification() {

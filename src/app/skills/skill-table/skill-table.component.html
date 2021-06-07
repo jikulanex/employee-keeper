@@ -22,7 +22,7 @@
       <!-- Table body -->
       <tbody>
         <tr *ngFor="let item of skills">
-          <td>{{ item.id }}</td>
+          <td>{{ item._id.slice(0, 8) }}</td>
           <td>{{ item.name }}</td>
 
           <!-- Generate 20 'th' element -->
