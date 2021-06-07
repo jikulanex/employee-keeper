@@ -23,9 +23,6 @@
       <!-- Table body -->
       <tbody>
         <tr *ngFor="let employee of employees">
-          <!-- <th>
-            <a (click)="displayEmployeeDetails()">{{ employee._id.slice(0, 8) }}</a>
-          </th> -->
           <th>{{ employee.firstName }}</th>
           <th>{{ employee.lastName }}</th>
           <th>{{ employee.birthDate | date }}</th>
@@ -53,40 +50,6 @@
               </button>
             </div>
           </th>
-
-          <!-- Employee details modal -->
-          <div class="modal" [ngClass]="{ 'is-active': modalIsOpen }">
-            <!-- Modal dim background -->
-            <div class="modal-background" (click)="hideEmployeeDetails()"></div>
-
-            <!-- Modal card -->
-            <div class="modal-card">
-              <!-- Modal card body -->
-              <section class="modal-card-body content columns">
-                <div class="column">
-                  <h1>{{ employee.firstName }} {{ employee.lastName }}</h1>
-                  <p>{{ employee.birthDate | date }}</p>
-                  <p>{{ getAge(employee.birthDate) }}</p>
-                </div>
-
-                <div class="column">
-                  <h1>Skills</h1>
-                  <ul>
-                    <li *ngFor="let skill of employee.skills">
-                      {{ skill.name }}
-                    </li>
-                  </ul>
-                </div>
-              </section>
-            </div>
-
-            <!-- Close modal button -->
-            <button
-              class="modal-close is-large"
-              aria-label="close"
-              (click)="hideEmployeeDetails()"
-            ></button>
-          </div>
         </tr>
       </tbody>
     </table>

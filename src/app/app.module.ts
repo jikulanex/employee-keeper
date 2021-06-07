@@ -15,7 +15,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
   declarations: [AppComponent, HomeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
-    HttpClientModule /* Load the `HttpClientModuel`. */,
+    HttpClientModule /* Load the `HttpClientModule`. */,
     EmployeesModule /* Load 'Employee table' module. */,
     SkillsModule /* Load 'Skill table' module. */,
     /* Important note: */

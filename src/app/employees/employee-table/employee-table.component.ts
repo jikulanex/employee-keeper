@@ -24,8 +24,6 @@ interface Employee {
   styleUrls: ['./employee-table.component.css'],
 })
 export class EmployeeTableComponent implements OnInit {
-  modalIsOpen = false;
-
   formIsSubmitted = false;
 
   today = new Date().getFullYear();
@@ -72,16 +70,6 @@ export class EmployeeTableComponent implements OnInit {
       // Assign the data from database since at this point local storage returns null.
       this.employees = response.data;
     });
-  }
-
-  // Displays the employee details.
-  displayEmployeeDetails() {
-    this.modalIsOpen = true;
-  }
-
-  // Hides the employee details.
-  hideEmployeeDetails() {
-    this.modalIsOpen = false;
   }
 
   // Computes the age based on the given birthdate.
