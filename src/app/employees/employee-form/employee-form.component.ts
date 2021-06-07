@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EmployeeService } from '../../services/employee-service.service';
-import { SkillService } from '../../services/skill-service.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { EmployeeService } from 'src/app/services/employee-service.service';
+import { SkillService } from 'src/app/services/skill-service.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 interface Employee {
-  id: number;
+  _id: string;
   firstName: string;
   lastName: string;
   birthDate: string;
   skills: Array<Skill>;
+  __v?: number;
 }
 
 @Component({
@@ -49,41 +51,76 @@ export class EmployeeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.employees = this.employeeService.getEmployees();
+    // Fetch existing employee data.
+    const localStorageEmployeeData: string | null =
+      this.localStorageService.getItem('employees');
 
-    // Fetch skills data stored from local storage
-    const skillsData: any = this.localStorageService.getItem('skills');
+    this.employeeService.getEmployees().subscribe((response: any) => {
+      if (localStorageEmployeeData?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (localStorageEmployeeData?.length < response.data?.length) {
+          console.info('Http get response', response);
 
-    // When skills data exist from local storage, assign it to `skills` class property.
-    if (skillsData?.length) {
-      this.skills = JSON.parse(skillsData);
-      return;
-    }
+          // Assign the data from database.
+          this.employees = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.employees = JSON.parse(localStorageEmployeeData);
+        return;
+      }
 
-    this.skills = this.skillService.getSkills();
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.employees = response.data;
+    });
+
+    // Fetch existing skill data.
+    const localStorageSkillData: string | null =
+      this.localStorageService.getItem('skills');
+
+    this.skillService.getSkills().subscribe((response: any) => {
+      if (localStorageSkillData?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (localStorageSkillData?.length < response.data?.length) {
+          console.info('Http get response', response);
+
+          // Assign the data from database.
+          this.skills = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.skills = JSON.parse(localStorageSkillData);
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.skills = response.data;
+    });
   }
 
   onSubmit() {
     console.info('Form submitted', this.employeeForm.value);
 
-    const employee = {
-      id: this.employees.length + 1,
-      ...this.employeeForm.value,
-    };
+    // Update the skills array data.
+    this.employeeService
+      .setEmployee(this.employeeForm.value)
+      .subscribe((response) => {
+        console.info('Http post response', response);
 
-    // Update the employee array data.
-    this.employeeService.setEmployee(employee);
+        this.employeeService.getEmployees().subscribe((response: any) => {
+          console.info('Http get response', response);
 
-    // Store the employee array data to local storage.
-    this.localStorageService.setItem(
-      'employees',
-      this.employeeService.getEmployees()
-    );
+          // Store the skills array data to local storage.
+          this.localStorageService.setItem('employees', response.data);
 
-    // Clear input fields.
-    this.employeeForm.reset();
+          // Clear input field.
+          this.employeeForm.reset();
 
-    this.displayNotification();
+          this.displayNotification();
+        });
+      });
   }
 
   displayNotification() {
