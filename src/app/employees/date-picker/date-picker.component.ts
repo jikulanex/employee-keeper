@@ -12,7 +12,9 @@ export class DatePickerComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('Form control', this.control);
+  }
 
   // Triggers helper text telling the user the entered input is not valid.
   displayErrorHelperText() {

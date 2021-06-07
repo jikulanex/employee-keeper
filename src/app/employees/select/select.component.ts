@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 @Component({
@@ -13,13 +14,18 @@ interface Skill {
 export class SelectComponent implements OnInit {
   @Input() label!: string;
   @Input() helperText!: string;
-  @Input() options!: Skill[];
+  @Input() options!: Array<Skill>;
   @Input() control!: any;
 
   constructor() {}
 
   ngOnInit(): void {
     console.log('Form control', this.control);
+  }
+
+  // Check if skill should be marked as a selected option.
+  checkSelected(skill: Skill) {
+    return this.control.value.includes(skill.name);
   }
 
   // Assigns value to the 'skills' form control.

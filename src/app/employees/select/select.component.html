@@ -5,9 +5,11 @@
     <div class="select is-link is-fullwidth">
       <select multiple [formControl]="control">
         <option value="" disabled>Select skill</option>
-        <option *ngFor="let option of options" [ngValue]="option">
-          {{ option.name }}
-        </option>
+        <ng-container *ngFor="let option of options">
+          <option [selected]="checkSelected(option)" [ngValue]="option.name">
+            {{ option.name }}
+          </option>
+        </ng-container>
       </select>
     </div>
 
