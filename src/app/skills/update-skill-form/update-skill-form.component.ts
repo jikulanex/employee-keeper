@@ -6,8 +6,9 @@ import { SkillService } from '../../services/skill-service.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 @Component({
@@ -18,7 +19,7 @@ interface Skill {
 export class UpdateSkillFormComponent implements OnInit {
   skill: any;
   skills: Array<Skill> = [];
-  skillId!: number;
+  skillId!: string;
   formIsSubmitted = false;
 
   skillsForm = new FormGroup({
@@ -35,46 +36,73 @@ export class UpdateSkillFormComponent implements OnInit {
     const localStorageData: any = this.localStorageService.getItem('skills');
 
     // Fetch existing skill data.
-    if (localStorageData?.length) {
-      this.skills = JSON.parse(localStorageData);
-    } else {
-      this.skills = this.skillService.getSkills();
-    }
-    console.info('Existing skills', this.skills);
+    this.skillService.getSkills().subscribe((response: any) => {
+      if (localStorageData?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (localStorageData?.length < response.data?.length) {
+          console.info('Http get response', response);
+
+          // Assign the data from database.
+          this.skills = response.data;
+
+          // Log data take from database.
+          console.info('Existing skills', this.skills);
+
+          return;
+        }
+        // Assign the data from local storage.
+        this.skills = JSON.parse(localStorageData);
+
+        // Log data take from local storage.
+        console.info('Existing skills', this.skills);
+
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.skills = response.data;
+
+      // Log data take from database.
+      console.info('Existing skills', this.skills);
+    });
 
     // Fetch skill ID data.
     this.skillId = this.activatedRoute.snapshot.params['id'];
     console.info('Fetch skill ID', this.skillId);
 
     // Extract skill data with the given ID.
-    this.skill = this.skills.find((skill) => skill.id === Number(this.skillId));
-    console.info('Fetched skill data', this.skill);
+    this.skillService.getSkill(this.skillId).subscribe((response: any) => {
+      const skillData = response.data;
+      console.info('Fetched skill data', skillData);
 
-    // Programmatically set the text field with the skill name data.
-    this.skillsForm.setValue({ name: this.skill?.name });
+      this.skill = skillData;
+      // Programmatically set the text field with the skill name data.
+      this.skillsForm.setValue({ name: skillData?.name });
+    });
   }
 
   onSubmit() {
     console.info('Form data submitted', this.skillsForm.value);
 
-    // Update the existing skill data by inserting the new skill name data.
-    const updatedSkillData: Array<Skill> = this.skills.map((skill) => {
-      if (skill.id === Number(this.skillId)) {
-        return { ...skill, name: this.skillsForm.value.name };
-      }
-      return skill;
-    });
-
     // Update the skills array data.
-    this.skillService.updateSkills(updatedSkillData);
+    this.skillService
+      .updateSkill(this.skillId, this.skillsForm.value)
+      .subscribe((response) => {
+        console.info('Http put response', response);
 
-    // Store the skills array data to local storage.
-    this.localStorageService.setItem('skills', updatedSkillData);
+        this.skillService.getSkills().subscribe((response: any) => {
+          console.info('Http get response', response);
 
-    // Clear input field.
-    this.skillsForm.reset();
+          // Store the skills array data to local storage.
+          this.localStorageService.setItem('skills', response.data);
 
-    this.displayNotification();
+          // Clear input field.
+          this.skillsForm.reset();
+
+          this.displayNotification();
+        });
+      });
   }
 
   displayNotification() {
