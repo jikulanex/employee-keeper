@@ -1,37 +1,41 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillService {
-  skills: Array<Skill> = [
-    { id: 1, name: 'HTML' },
-    { id: 2, name: 'CSS' },
-    { id: 3, name: 'JavaScript' },
-    { id: 4, name: 'Node.js' },
-    { id: 5, name: 'Angular' },
-    { id: 6, name: 'Vue.js' },
-    { id: 7, name: 'React.js' },
-  ];
+  skills: Array<Skill> = [];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getSkills() {
-    return this.skills;
+    return this.http.get('http://localhost:5000/api/v1/skills');
+  }
+
+  getSkill(id: string) {
+    return this.http.get(`http://localhost:5000/api/v1/skills/${id}`);
   }
 
   setSkill(skill: Skill) {
-    this.skills = [...this.skills, skill];
-    console.info('Updated skills data', this.skills);
+    return this.http.post(`http://localhost:5000/api/v1/skills`, {
+      name: skill.name,
+    });
   }
 
-  updateSkills(skillsData: Array<Skill>) {
-    this.skills = [...skillsData];
-    console.info('Mutated skills data', this.skills);
+  updateSkill(id: string, skill: Skill) {
+    return this.http.put(`http://localhost:5000/api/v1/skills/${id}`, {
+      name: skill.name,
+    });
+  }
+
+  deleteSkill(id: string) {
+    return this.http.delete(`http://localhost:5000/api/v1/skills/${id}`);
   }
 }
