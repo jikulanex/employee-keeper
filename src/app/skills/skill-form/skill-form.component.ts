@@ -4,8 +4,9 @@ import { SkillService } from '../../services/skill-service.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 interface Skill {
-  id: number;
+  _id: string;
   name: string;
+  __v?: number;
 }
 
 @Component({
@@ -28,24 +29,49 @@ export class SkillFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.skills = this.skillService.getSkills();
+    // Fetch existing skill data.
+    const data: string | null = this.localStorageService.getItem('skills');
+
+    this.skillService.getSkills().subscribe((response: any) => {
+      if (data?.length) {
+        // When the data length from local storage is smaller than the data length from the database.
+        if (data?.length < response.data?.length) {
+          console.info('Http get response', response);
+
+          // Assign the data from database.
+          this.skills = response.data;
+          return;
+        }
+        // Assign the data from local storage.
+        this.skills = JSON.parse(data);
+        return;
+      }
+
+      console.info('Http get response', response);
+      // Assign the data from database since at this point local storage returns null.
+      this.skills = response.data;
+    });
   }
 
   onSubmit() {
     console.info('Form submitted', this.skillsForm.value);
 
-    const skill = { id: this.skills.length + 1, ...this.skillsForm.value };
-
     // Update the skills array data.
-    this.skillService.setSkill(skill);
+    this.skillService.setSkill(this.skillsForm.value).subscribe((response) => {
+      console.info('Http post response', response);
 
-    // Store the skills array data to local storage.
-    this.localStorageService.setItem('skills', this.skillService.getSkills());
+      this.skillService.getSkills().subscribe((response: any) => {
+        console.info('Http get response', response);
 
-    // Clear input field.
-    this.skillsForm.reset();
+        // Store the skills array data to local storage.
+        this.localStorageService.setItem('skills', response.data);
 
-    this.displayNotification();
+        // Clear input field.
+        this.skillsForm.reset();
+
+        this.displayNotification();
+      });
+    });
   }
 
   displayNotification() {
